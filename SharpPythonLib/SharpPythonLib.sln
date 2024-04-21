@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpPythonLib", "SharpPythonLib\SharpPythonLib.csproj", "{FC65CEA1-8C77-4AC6-A068-D696B83660B8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC65CEA1-8C77-4AC6-A068-D696B83660B8}.Debug|x64.ActiveCfg = Debug|x64
+		{FC65CEA1-8C77-4AC6-A068-D696B83660B8}.Debug|x64.Build.0 = Debug|x64
+		{FC65CEA1-8C77-4AC6-A068-D696B83660B8}.Release|x64.ActiveCfg = Release|x64
+		{FC65CEA1-8C77-4AC6-A068-D696B83660B8}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {295C9F3A-5D03-4AA8-95C8-8A33B9B9B3B5}
+	EndGlobalSection
+EndGlobal
