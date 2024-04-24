@@ -14,14 +14,14 @@ clr.AddReference(ref_path)
 
 from SharpPythonLib import SharpPythonCallbackTester
 
-def callback(a, b, c):
-    print("CALLBACK", a, b, c)
+def joystick_callback(yaw :int, pitch :int, fire :bool, black_button :bool, red_button :bool, slowmo:int, slider :int):
+    print("JOYSTICK: ", yaw, pitch, fire, black_button, red_button, slowmo, slider)
 
 if __name__ == "__main__":
     obj = SharpPythonCallbackTester()
     a = obj.call_me_from_py()
     print("a: ", a)
-    obj.set_callback(Action[int, int, int](callback))
+    obj.set_callback(Action[int, int, bool, bool, bool, int, int](joystick_callback))
 try:
     while True:
         time.sleep(20)
