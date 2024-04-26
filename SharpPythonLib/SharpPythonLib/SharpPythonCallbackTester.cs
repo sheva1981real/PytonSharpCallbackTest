@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 using SharpDX.DirectInput;
@@ -172,6 +173,101 @@ namespace SharpPythonLib
             }
         }
 
+        private void EmulatorOneLoop()
+        {
+            try
+            {
+                yawPrev = JOY_VALUE_LOW;
+                yawNew = JOY_VALUE_MIDDLE;
+                pitchPrev = JOY_VALUE_LOW;
+                pitchNew = JOY_VALUE_MIDDLE;
+                buttons0Prev = JOY_OFF;
+                buttons0New = JOY_OFF;
+                povPrev = JOY_VALUE_LOW;
+                povNew = -1;
+                buttons2Prev = JOY_OFF;
+                buttons2New = JOY_OFF;
+                buttons3Prev = JOY_OFF;
+                buttons3New = JOY_OFF;
+                sliders0Prev = JOY_VALUE_LOW;
+                sliders0New = JOY_VALUE_LOW;
+
+                Console.WriteLine("Center:");
+                ProcessStates(); // Первый callback с позицией "центр"
+
+                int step10 = (32768 / 2) / 10;
+                int step100 = (32768 / 2) / 100;
+
+                Console.WriteLine("TOP-UP:");
+                // по диагонали вверх вправо
+                for (int y = 0; y < 10; y++)
+                {
+                    for (int x = 0; x < 10; x++)
+                    {
+                        yawNew += step100;
+                        pitchNew -= step100;
+                        ProcessStates();
+                        Thread.Sleep(10);
+                    }
+                    buttons0New = buttons0New == JOY_ON ? JOY_OFF : JOY_ON;
+                }
+
+                Console.WriteLine("BOTTOM:");
+                // вниз
+                for (int y = 0; y < 20; y++)
+                {
+                    pitchNew += step10;
+                    ProcessStates();
+                    Thread.Sleep(10);
+                }
+
+                buttons0New = buttons0New == JOY_ON ? JOY_OFF : JOY_ON;
+
+                Console.WriteLine("LEFT:");
+                // влево
+                for (int x = 0; x < 20; x++)
+                {
+                    yawNew -= step10;
+                    ProcessStates();
+                    Thread.Sleep(10);
+                }
+
+                buttons0New = buttons0New == JOY_ON ? JOY_OFF : JOY_ON;
+
+                Console.WriteLine("UP:");
+                // вверх
+                for (int y = 0; y < 20; y++)
+                {
+                    pitchNew -= step10;
+                    ProcessStates();
+                    Thread.Sleep(10);
+                }
+
+                buttons0New = buttons0New == JOY_ON ? JOY_OFF : JOY_ON;
+
+                Console.WriteLine("DOWN-RIGTH:");
+                // по диагонали вних вправо
+                for (int x = 0; x < 10; x++)
+                {
+                    for (int y = 0; y < 10; y++)
+                    {
+                        pitchNew += step100;
+                        yawNew += step100;
+                        ProcessStates();
+                        Thread.Sleep(10);
+                    }
+                    buttons0New = buttons0New == JOY_ON ? JOY_OFF : JOY_ON;
+                }
+
+                Thread.Sleep(5);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
         SharpPythonCallbackTester()
         {
             callback = null;
@@ -187,6 +283,9 @@ namespace SharpPythonLib
                 if (FindJoyStick())
                 {
                     JoyStickLoop();
+                } else
+                {
+                    EmulatorOneLoop();
                 }
                 Thread.Sleep(50);
             }
