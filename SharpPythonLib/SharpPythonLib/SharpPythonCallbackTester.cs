@@ -15,6 +15,7 @@ namespace SharpPythonLib
 
         private const int JOY_VALUE_HI = 65535;
         private const int JOY_VALUE_LOW = 0;
+        private const int JOY_VALUE_POV_NONE = -1;
         private const int JOY_VALUE_MIDDLE = 32767;
         private const int JOY_ON = 128;
         private const int JOY_OFF = 0;
@@ -31,8 +32,8 @@ namespace SharpPythonLib
         private int buttons0New = JOY_OFF;
 
         // Маленький джойстик вверху (по часовой 12:0 3:9000 6:18000 9:27000 12:35999; ifu 4500)
-        private int povPrev = JOY_VALUE_LOW;
-        private int povNew = JOY_VALUE_LOW;
+        private int povPrev = JOY_VALUE_POV_NONE;
+        private int povNew = JOY_VALUE_POV_NONE;
 
         // Черная Кнопка слева (вЫкл:0, ВКЛ:128)
         private int buttons2Prev = JOY_OFF;
