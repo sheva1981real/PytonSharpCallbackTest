@@ -10,6 +10,8 @@ namespace SharpPythonLib
 
         private DirectInput directInput;
         private Joystick? joystick;
+        
+        Thread callbackThread;
 
         private int callCount;
         private Delegate? callback;
@@ -275,24 +277,38 @@ namespace SharpPythonLib
             StartThread();
         }
 
+        public void Detouch()
+        {
+            callbackThread.Abort();
+        }
+
 
         public void ThreadMethod()
         {
-            while (true)
+            try
             {
-                if (FindJoyStick())
+                while (true)
                 {
-                    JoyStickLoop();
-                } else
-                {
-                    EmulatorOneLoop();
+                    if (FindJoyStick())
+                    {
+                        JoyStickLoop();
+                    }
+                    else
+                    {
+                        EmulatorOneLoop();
+                    }
+                    Thread.Sleep(50);
                 }
-                Thread.Sleep(50);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Joystick Emulation tread aborted!");
             }
         }
         private void StartThread()
         {
-            Thread callbackThread = new Thread(
+            callbackThread = new Thread(
                         new ThreadStart(this.ThreadMethod));
             callbackThread.Start();
             Console.WriteLine("ThreadStarted");

@@ -16,7 +16,7 @@ from SharpPythonLib import SharpPythonCallbackTester
 
 def joystick_callback(yaw :int, pitch :int, fire :bool, black_button :bool, red_button :bool, slowmo:int, slider :int):
     print("JOYSTICK: ", yaw, pitch, fire, black_button, red_button, slowmo, slider)
-
+    
 if __name__ == "__main__":
     obj = SharpPythonCallbackTester()
     a = obj.call_me_from_py()
@@ -26,4 +26,5 @@ try:
     while True:
         time.sleep(20)
 except KeyboardInterrupt:
+    obj.Detouch()
     pass
