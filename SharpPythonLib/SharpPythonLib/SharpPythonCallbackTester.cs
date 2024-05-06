@@ -87,7 +87,7 @@ namespace SharpPythonLib
         }
         void ProcessStates()
         {
-            bool bYaw = Abs(yawNew - yawPrev) > JOY_XY_TRESHOLD;
+            bool bYaw = (yawNew == 32676 && pitchNew == 32676) || (Abs(yawNew - yawPrev) > JOY_XY_TRESHOLD);            
             bool bPitch = Abs(pitchNew - pitchPrev) > JOY_XY_TRESHOLD;
             bool bFire = Abs(buttons0New - buttons0Prev) > 0;
             bool bBlackBnt = Abs(buttons2New - buttons2Prev) > 0;
